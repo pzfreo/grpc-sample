@@ -1,0 +1,64 @@
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    // ASSUMES GRADLE 2.12 OR HIGHER. Use plugin version 0.7.5 with earlier
+    // gradle versions
+    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.1'
+
+  }
+}
+
+
+plugins {
+
+  id 'com.github.johnrengelman.shadow' version '1.2.3'
+
+}
+
+apply plugin: 'java'
+apply plugin: 'com.google.protobuf'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'application'
+
+
+
+mainClassName = 'freo.me.grpc.PurchaseServer'
+
+
+protobuf {
+  protoc {
+    artifact = "com.google.protobuf:protoc:3.5.1-1"
+  }
+  plugins {
+    grpc {
+      artifact = 'io.grpc:protoc-gen-grpc-java:1.9.0'
+    }
+  }
+  generateProtoTasks {
+    all()*.plugins {
+      grpc {}
+    }
+  }
+  sourceSets {
+    main {
+        java {
+          	srcDirs 'src/main/java'
+            srcDirs 'build/generated/source/proto/main/grpc'
+            srcDirs 'build/generated/source/proto/main/java'
+        }
+    }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+	compile 'io.grpc:grpc-netty:1.9.0'
+	compile 'io.grpc:grpc-protobuf:1.9.0'
+	compile 'io.grpc:grpc-stub:1.9.0'
+}
+}
