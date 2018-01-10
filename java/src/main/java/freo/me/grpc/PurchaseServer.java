@@ -66,8 +66,8 @@ public class PurchaseServer {
     @Override
     public void purchase(PurchaseRequest req, StreamObserver<PurchaseReply> responseObserver) {
     
- //   	System.out.println("Customer Number: " +req.getCustomerNumber());
- //   	System.out.println("PO Number: " +req.getPoNumber());
+      System.out.println("Customer Number: " +req.getCustomerNumber());
+      System.out.println("PO Number: " +req.getPoNumber());
       PurchaseReply reply = PurchaseReply.newBuilder().setMessage("order accepted").setReturncode(0).build();
       responseObserver.onNext(reply);
       responseObserver.onCompleted();
