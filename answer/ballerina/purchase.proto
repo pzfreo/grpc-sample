@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package freo.me.purchase;
+
+service Purchase {
+ 
+  rpc purchase (PurchaseRequest) returns (PurchaseReply) {}
+}
+
+message PurchaseRequest {
+  string poNumber = 1;
+  string lineItem = 2;
+  int32 quantity = 3;
+  Date date = 4;
+  string customerNumber= 5;
+  string paymentReference = 6;
+
+}
+
+message Date {
+	int32 year = 1;
+	int32 month = 2;
+	int32 day = 3;
+}
+
+message PurchaseReply {
+  string message = 1;
+  int32 returncode = 2;
+}
