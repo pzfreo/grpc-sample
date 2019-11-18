@@ -1,6 +1,5 @@
 package freo.me.grpc;
 
-
 import freo.me.purchase.PurchaseOuterClass.PurchaseReply;
 import freo.me.purchase.PurchaseOuterClass.PurchaseRequest;
 import io.grpc.Server;
@@ -21,15 +20,13 @@ public class PurchaseServer {
   private void start() throws IOException {
     /* The port on which the server should run */
     int port = 50051;
-    server = ServerBuilder.forPort(port)
-        .addService(new PurchaseImpl())
-        .build()
-        .start();
+    server = ServerBuilder.forPort(port).addService(new PurchaseImpl()).build().start();
     logger.info("Server started, listening on " + port);
     Runtime.getRuntime().addShutdownHook(new Thread() {
       @Override
       public void run() {
-        // Use stderr here since the logger may have been reset by its JVM shutdown hook.
+        // Use stderr here since the logger may have been reset by its JVM shutdown
+        // hook.
         System.err.println("*** shutting down gRPC server since JVM is shutting down");
         PurchaseServer.this.stop();
         System.err.println("*** server shut down");
@@ -44,7 +41,8 @@ public class PurchaseServer {
   }
 
   /**
-   * Await termination on the main thread since the grpc library uses daemon threads.
+   * Await termination on the main thread since the grpc library uses daemon
+   * threads.
    */
   private void blockUntilShutdown() throws InterruptedException {
     if (server != null) {
@@ -65,13 +63,12 @@ public class PurchaseServer {
 
     @Override
     public void purchase(PurchaseRequest req, StreamObserver<PurchaseReply> responseObserver) {
-    
-      System.out.println("Customer Number: " +req.getCustomerNumber());
-      System.out.println("PO Number: " +req.getPoNumber());
+
+      System.out.println("Customer Number: " + req.getCustomerNumber());
+      System.out.println("PO Number: " + req.getPoNumber());
       PurchaseReply reply = PurchaseReply.newBuilder().setMessage("order accepted").setReturncode(0).build();
       responseObserver.onNext(reply);
       responseObserver.onCompleted();
     }
   }
 }
-

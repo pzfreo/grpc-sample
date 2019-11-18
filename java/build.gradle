@@ -4,9 +4,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    // ASSUMES GRADLE 2.12 OR HIGHER. Use plugin version 0.7.5 with earlier
-    // gradle versions
-    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.7'
+     classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.8'
 
   }
 }
@@ -27,11 +25,11 @@ mainClassName = 'freo.me.grpc.PurchaseServer'
 
 protobuf {
   protoc {
-    artifact = "com.google.protobuf:protoc:3.5.1-1"
+    artifact = "com.google.protobuf:protoc:3.10.0"
   }
   plugins {
     grpc {
-      artifact = 'io.grpc:protoc-gen-grpc-java:1.16.1'
+      artifact = 'io.grpc:protoc-gen-grpc-java:1.25.0'
     }
   }
   generateProtoTasks {
@@ -54,8 +52,9 @@ repositories {
 }
 
 dependencies {
-	compile 'io.grpc:grpc-netty:1.16.1'
-	compile 'io.grpc:grpc-protobuf:1.16.1'
-	compile 'io.grpc:grpc-stub:1.16.1'
+	compile 'io.grpc:grpc-netty:1.25.0'
+	compile 'io.grpc:grpc-protobuf:1.25.0'
+	compile 'io.grpc:grpc-stub:1.25.0'
+  compile 'com.google.protobuf:protobuf-java:3.10.0'
 }
 }
